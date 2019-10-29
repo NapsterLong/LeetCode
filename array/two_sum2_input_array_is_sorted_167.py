@@ -22,24 +22,29 @@ class Solution:
             tar = target - numbers[i]
             j = self.search(numbers, tar)
             if j and i != j:
-                return [i + 1, j + 1]
+                if i < j:
+                    return [i + 1, j + 1]
+                else:
+                    return [j + 1, i + 1]
 
     def search(self, numbers, tar):
         begin = 0
         end = len(numbers) - 1
         middle = int((begin + end) / 2)
-        while begin != end:
+        while begin <= end:
             if tar == numbers[middle]:
                 return middle
             if tar > numbers[middle]:
                 begin = middle + 1
+                middle = int((begin + end) / 2)
             else:
                 end = middle - 1
+                middle = int((begin + end) / 2)
         return None
 
 
 if __name__ == '__main__':
     s = Solution()
-    numbers = [2, 7, 11, 15]
-    target = 9
+    numbers = [2, 3, 4]
+    target = 6
     print(s.twoSum(numbers, target))
