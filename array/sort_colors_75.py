@@ -21,24 +21,30 @@ class Solution:
         """
         if len(nums) == 1:
             return
-        start, end = 0, len(nums) - 1
-        for i in range(len(nums)):
-            if nums[i] == 0:
-                if i == start:
+        index, start, end = 0, 0, len(nums) - 1
+        while index != end:
+            if nums[index] == 0:
+                if start == index:
                     start += 1
+                    index += 1
                     continue
                 else:
-                    nums[i], nums[start] = nums[start], nums[i]
+                    nums[index], nums[start] = nums[start], nums[index]
                     start += 1
-            if nums[i] == 2:
-                if i == end:
-                    break
-                nums[i], nums[end] = nums[end], nums[i]
+                    continue
+            if nums[index] == 2:
+                nums[index], nums[end] = nums[end], nums[index]
                 end -= 1
+                continue
+            if nums[index] == 1:
+                index += 1
+                continue
+        if nums[index] == 0:
+            nums[index], nums[start] = nums[start], nums[index]
 
 
 if __name__ == '__main__':
     s = Solution()
-    nums = [2, 0, 2, 1, 1, 0]
+    nums = [2, 1]
     s.sortColors(nums)
     print(nums)
