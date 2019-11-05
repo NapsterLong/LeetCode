@@ -62,10 +62,31 @@ class Solution:
             idx1 += 1
             print(nums1)
 
+    # 不考虑空间
+    def merge_space(self, nums1: List[int], m: int, nums2: List[int], n: int) -> None:
+        temp = []
+        point1 = 0
+        point2 = 0
+        while point1 < m or point2 < n:
+            if point1 >= m:
+                temp += nums2[point2:n]
+                break
+            if point2 >= n:
+                temp += nums1[point1:m]
+                break
+            if nums1[point1] >= nums2[point2]:
+                temp.append(nums2[point2])
+                point2 += 1
+            else:
+                temp.append(nums1[point1])
+                point1 += 1
+        print(len(temp))
+        nums1[:m + n] = temp
+
 
 if __name__ == '__main__':
     s = Solution()
     nums1 = [1, 2, 4, 5, 6, 0]
     nums2 = [3]
-    s.merge(nums1, 5, nums2, 1)
+    s.merge_space(nums1, 5, nums2, 1)
     print(nums1)
