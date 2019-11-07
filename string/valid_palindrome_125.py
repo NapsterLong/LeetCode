@@ -16,17 +16,18 @@ Output: false
 
 class Solution:
     def isPalindrome(self, s: str) -> bool:
+        valid_char = set("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ01234567890")
         if s == "":
             return True
         start = 0
         end = len(s) - 1
         while start < end:
             char1 = s[start]
-            if not (48 <= ord(char1) <= 57 or 65 <= ord(char1) <= 90 or 97 <= ord(char1) <= 122):
+            if char1 not in valid_char:
                 start += 1
                 continue
             char2 = s[end]
-            if not (48 <= ord(char2) <= 57 or 65 <= ord(char2) <= 90 or 97 <= ord(char2) <= 122):
+            if char2 not in valid_char:
                 end -= 1
                 continue
             if self.same(char1, char2):
