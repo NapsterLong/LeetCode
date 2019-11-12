@@ -25,5 +25,18 @@ class Solution:
     def increasingTriplet(self, nums: List[int]) -> bool:
         if len(nums) < 3:
             return False
-        idx = 0
+        import sys
+        a, b = sys.maxsize, sys.maxsize
+        for num in nums:
+            if num <= a:
+                a = num
+            elif num <= b:
+                b = num
+            else:
+                return True
         return False
+
+
+s = Solution()
+print(s.increasingTriplet([1, 2, 3, 4, 5]))
+print(s.increasingTriplet([5, 4, 3, 2, 1]))
