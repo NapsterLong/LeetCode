@@ -46,8 +46,6 @@ class Solution:
 
     def connectR(self, root: Node, p):
         root.next = p
-        left_p = None
-        right_p = None
         first = None
         temp = root.next
         while temp:
