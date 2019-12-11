@@ -36,11 +36,13 @@ class TreeNode:
 
 class Solution:
     def maxPathSum(self, root: TreeNode) -> int:
+        import sys
         if root is None:
             return 0
         self.node2sum = {}
-        self.max_sum = 0
+        self.max_sum = -sys.maxsize
         self.pathSumDown(root)
+        print(self.node2sum)
         self.maxPathSuR(root, None, None)
         return self.max_sum
 
@@ -50,15 +52,30 @@ class Solution:
         self.node2sum[root] = {"left": leftSum + root.val, "right": rightSum + root.val}
         return max(leftSum, rightSum) + root.val
 
-    def maxPathSuR(self, root: TreeNode, source, parent) -> int:
+    def maxPathSuR(self, root: TreeNode, source, parent):
         if root is None:
             return
         if source is None:
-            self.max_sum = max(self.node2sum[root]["left", self.node2sum[root]["right"]])
+            self.max_sum = max(root.val, self.node2sum[root]["left"], self.node2sum[root]["right"], self.max_sum)
+            self.node2sum[root]["up"] = 0
         if source == "left":
-            self.max_sum = max(self.node2sum[root]["left", self.node2sum[root]["right"]],
-                               self.node2sum[parent]["right"])
+            self.max_sum = max(root.val, self.node2sum[root]["left"], self.node2sum[root]["right"],
+                               root.val + self.node2sum[parent]["right"], root.val + self.node2sum[parent]["up"],
+                               self.max_sum)
+            self.node2sum[root]["up"] = max(root.val + self.node2sum[parent]["up"], root.val + parent.val,
+                                            root.val + self.node2sum[parent]["right"])
         if source == "right":
-            self.max_sum = max(self.node2sum[root]["left", self.node2sum[root]["right"]], self.node2sum[parent]["left"])
+            self.max_sum = max(root.val, self.node2sum[root]["left"], self.node2sum[root]["right"],
+                               root.val + self.node2sum[parent]["left"], root.val + self.node2sum[parent]["up"],
+                               self.max_sum)
+            self.node2sum[root]["up"] = max(root.val + self.node2sum[parent]["up"], root.val + parent.val,
+                                            root.val + self.node2sum[parent]["left"])
         self.maxPathSuR(root.left, "left", root)
         self.maxPathSuR(root.right, "right", root)
+
+# [5,4,8,11,null,13,4,7,2,null,null,null,1]
+s = Solution()
+t = TreeNode(2)
+t.left = TreeNode(-1)
+t.right = TreeNode(-2)
+print(s.maxPathSum(t))
