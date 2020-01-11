@@ -60,14 +60,26 @@ class Solution:
         stack = [root]
         while stack:
             length = len(stack)
-            for t in stack:
+            temp_result = 0
+            idx = 0
+            while idx < length:
+                t = stack.pop(0)
+                temp_result += t.val
+                idx += 1
                 if t.left:
                     stack.append(t.left)
                 if t.right:
                     stack.append(t.right)
-            temp_result = 0
-            for i in range(length):
-                x = stack.pop(i)
-                temp_result += x.val
             result.append(temp_result)
         return result
+
+
+s = Solution()
+t = TreeNode(3)
+t1 = TreeNode(2)
+t1.right = TreeNode(3)
+t.left = t1
+t2 = TreeNode(3)
+t2.right = TreeNode(1)
+t.right = t2
+print(s.levelOrder(t))
