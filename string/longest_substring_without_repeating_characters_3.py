@@ -31,12 +31,27 @@ class Solution:
                 result = i + 1 - start if i + 1 - start > result else result
             else:
                 idx = cache[s[i]]
-                start =idx + 1
+                start = idx + 1
                 keys = [k for k, v in cache.items() if v < start]
                 for key in keys:
                     cache.pop(key)
                 cache[s[i]] = i
         return result
+
+    def lengthOfLongestSubstring2(self, s: str) -> int:
+        max_length = 0
+        char2pos = {}
+        for idx, char in enumerate(s):
+            if char not in char2pos:
+                char2pos[char] = idx
+                max_length = max(len(char2pos), max_length)
+            else:
+                origin_idx = char2pos[char]
+                deleted_value = [value for value, pos in char2pos.items() if pos <= origin_idx]
+                for value in deleted_value:
+                    char2pos.pop(value)
+                char2pos[char] = idx
+        return max(len(char2pos), max_length)
 
 
 if __name__ == '__main__':
