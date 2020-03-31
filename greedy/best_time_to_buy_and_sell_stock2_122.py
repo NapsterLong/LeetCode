@@ -54,8 +54,32 @@ class Solution:
                     sell = None
         return result
 
+    def maxProfit2(self, prices: List[int]) -> int:
+        result = 0
+        for idx in range(len(prices) - 1):
+            if prices[idx + 1] > prices[idx]:
+                result += prices[idx + 1] - prices[idx]
+        return result
+
+    def maxProfit3(self, prices: List[int]) -> int:
+        if not prices:
+            return 0
+        buy = prices[0]
+        sell = prices[0]
+        result = 0
+        i = 0
+        while i < len(prices) - 1:
+            while i < len(prices) - 1 and prices[i + 1] <= prices[i]:
+                i += 1
+            begin = prices[i]
+            while i < len(prices) - 1 and prices[i + 1] >= prices[i]:
+                i += 1
+            end = prices[i]
+            result += end - begin
+        return result
+
 
 s = Solution()
-print(s.maxProfit([7, 1, 5, 3, 6, 4]))
-print(s.maxProfit([1, 2]))
-print(s.maxProfit([7, 6, 4, 3, 1]))
+print(s.maxProfit2([7, 1, 5, 3, 6, 4]))
+# print(s.maxProfit([1, 2]))
+# print(s.maxProfit([7, 6, 4, 3, 1]))
